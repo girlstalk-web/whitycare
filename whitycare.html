@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIRLS TALK - WHITY CARE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEE2E2; /* Pink Pastel */
+        }
+        .ruby-red {
+            background-color: #E53935; /* Ruby Red */
+        }
+        .pink-pastel {
+            background-color: #FCE7F3; /* Aksen Pink Pastel */
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .icon-small {
+            width: 2rem;
+            height: 2rem;
+        }
+        .page-transition {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Container Utama Aplikasi -->
+    <div id="app-container" class="w-full max-w-xl card p-8 transition-all duration-300">
+
+        <!-- Halaman Pembuka (Cover) -->
+        <div id="page-cover" class="page-transition text-center flex flex-col items-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">GIRLS TALK - WHITY CARE</h1>
+            <p class="text-lg font-medium text-gray-600 mb-8">Teman setia memahami tubuhmu, demi kesehatan remaja putri.</p>
+            <div class="mb-8">
+                <!-- SVG Bunga Cantik -->
+                <svg width="150" height="150" viewBox="0 0 100 100" class="mx-auto">
+                    <defs>
+                        <linearGradient id="petalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FCE7F3; stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#E53935; stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Kelopak Bunga -->
+                    <path d="M50,10 A40,40 0 0,1 90,50 A40,40 0 0,1 50,90 A40,40 0 0,1 10,50 A40,40 0 0,1 50,10" fill="url(#petalGradient)" />
+                    <path d="M50,10 A40,40 0 0,0 90,50 A40,40 0 0,0 50,90 A40,40 0 0,0 10,50 A40,40 0 0,0 50,10" fill="url(#petalGradient)" />
+                    <!-- Pusat Bunga -->
+                    <circle cx="50" cy="50" r="15" fill="#FFC107" stroke="#FF8F00" stroke-width="2" />
+                </svg>
+            </div>
+            <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                Halo, selamat datang di GIRLS TALK!
+                <br>
+                Tubuhmu sedang tumbuh dan berubah. Jangan khawatir, di sini kamu bisa belajar tentang keputihan dengan cara yang santai, hangat, dan mudah dipahami. Yuk, kenali tubuhmu lebih dekat, supaya kamu bisa selalu sehat dan percaya diri!
+            </p>
+            <button onclick="showPage('welcome')" class="ruby-red text-white font-semibold py-3 px-10 rounded-full shadow-lg hover:bg-red-700 transition-colors">
+                Mulai Sekarang
+            </button>
+        </div>
+
+        <!-- Halaman Selamat Datang (Input Nama & Usia) -->
+        <div id="page-welcome" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Yuk, Kenalan Dulu!</h2>
+            <p class="text-gray-700 mb-8 text-center">
+                Supaya lebih dekat, kami ingin tahu nama dan usiamu.
+            </p>
+            <div class="space-y-6">
+                <div>
+                    <label for="user-name" class="block text-gray-600 font-semibold mb-2">Namaku...</label>
+                    <input type="text" id="user-name" placeholder="Contoh: Bunga" class="w-full p-3 rounded-lg border-2 border-red-200 focus:outline-none focus:border-red-400 transition-colors">
+                </div>
+                <div>
+                    <label for="user-age" class="block text-gray-600 font-semibold mb-2">Usia...</label>
+                    <input type="number" id="user-age" placeholder="Contoh: 15" class="w-full p-3 rounded-lg border-2 border-red-200 focus:outline-none focus:border-red-400 transition-colors">
+                </div>
+            </div>
+            <div id="welcome-alert" class="hidden mt-4 text-sm text-red-600 text-center">
+                Mohon lengkapi nama dan usia dengan benar.
+            </div>
+            <button onclick="checkInputAndGoHome()" class="mt-8 w-full ruby-red text-white font-semibold py-3 rounded-full shadow-lg hover:bg-red-700 transition-colors">
+                Lanjut
+            </button>
+        </div>
+
+        <!-- Halaman Beranda (Menu Utama) -->
+        <div id="page-home" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Beranda</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button onclick="showPage('definisi')" class="text-left p-4 ruby-red text-white font-semibold rounded-xl shadow-md hover:bg-red-700 transition-colors flex items-center space-x-4">
+                    <span class="text-2xl">💡</span>
+                    <div>
+                        <p>Apa itu Keputihan?</p>
+                        <p class="text-xs font-normal">Penjelasan dasar & fungsinya.</p>
+                    </div>
+                </button>
+                <button onclick="showPage('tanda-bahaya')" class="text-left p-4 ruby-red text-white font-semibold rounded-xl shadow-md hover:bg-red-700 transition-colors flex items-center space-x-4">
+                    <span class="text-2xl">🚨</span>
+                    <div>
+                        <p>Tanda Bahaya</p>
+                        <p class="text-xs font-normal">Kenali gejala yang perlu diwaspadai.</p>
+                    </div>
+                </button>
+                <button onclick="showPage('ciri-ciri')" class="text-left p-4 ruby-red text-white font-semibold rounded-xl shadow-md hover:bg-red-700 transition-colors flex items-center space-x-4">
+                    <span class="text-2xl">🔍</span>
+                    <div>
+                        <p>Ciri Normal vs Tidak Normal</p>
+                        <p class="text-xs font-normal">Bisa membedakan mana yang sehat.</p>
+                    </div>
+                </button>
+                <button onclick="showPage('pencegahan')" class="text-left p-4 ruby-red text-white font-semibold rounded-xl shadow-md hover:bg-red-700 transition-colors flex items-center space-x-4">
+                    <span class="text-2xl">🛡️</span>
+                    <div>
+                        <p>Pencegahan & Perawatan</p>
+                        <p class="text-xs font-normal">Tips menjaga kesehatan area intim.</p>
+                    </div>
+                </button>
+                <button onclick="showPage('mitos')" class="text-left p-4 ruby-red text-white font-semibold rounded-xl shadow-md hover:bg-red-700 transition-colors flex items-center space-x-4">
+                    <span class="text-2xl">⚖️</span>
+                    <div>
+                        <p>Fakta vs Mitos</p>
+                        <p class="text-xs font-normal">Luruskan kesalahpahaman umum.</p>
+                    </div>
+                </button>
+                <button onclick="showPage('quiz')" class="text-left p-4 ruby-red text-white font-semibold rounded-xl shadow-md hover:bg-red-700 transition-colors flex items-center space-x-4">
+                    <span class="text-2xl">🧠</span>
+                    <div>
+                        <p>Quiz Interaktif</p>
+                        <p class="text-xs font-normal">Uji pengetahuanmu & dapatkan sertifikat!</p>
+                    </div>
+                </button>
+                <button onclick="showPage('bantuan')" class="text-left p-4 ruby-red text-white font-semibold rounded-xl shadow-md hover:bg-red-700 transition-colors flex items-center space-x-4 col-span-1 sm:col-span-2">
+                    <span class="text-2xl">📞</span>
+                    <div>
+                        <p>Pusat Bantuan</p>
+                        <p class="text-xs font-normal">Informasi kontak tenaga kesehatan.</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Halaman Definisi -->
+        <div id="page-definisi" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Apa itu Keputihan?</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Keputihan (atau <i>leukorrhea</i>) adalah cairan atau lendir yang keluar dari vagina. Ini adalah proses alami dan normal bagi tubuhmu untuk menjaga kebersihan dan melindungi organ intim dari infeksi. Cairan ini membawa sel-sel mati dan bakteri keluar dari tubuh.
+            </p>
+            <div class="flex justify-center mb-6">
+                <img src="https://placehold.co/400x300/FCE7F3/E53935?text=Diagram+Reproduksi+Wanita" alt="Diagram Sistem Reproduksi Wanita" class="rounded-lg shadow-md max-w-full h-auto" onerror="this.src='https://placehold.co/400x300/FCE7F3/E53935?text=Diagram+Reproduksi+Wanita';"/>
+            </div>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Keputihan bisa terjadi karena beberapa hal, seperti:
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
+                <li>
+                    <strong>Siklus Hormon:</strong> Jumlah dan tekstur keputihan bisa berubah sepanjang siklus menstruasi karena fluktuasi hormon estrogen.
+                </li>
+                <li>
+                    <strong>Rangsangan Seksual:</strong> Saat terangsang, aliran darah ke organ intim meningkat, menyebabkan produksi cairan pelumas.
+                </li>
+                <li>
+                    <strong>Stres & Kelelahan:</strong> Tubuh yang stres atau lelah bisa mengalami ketidakseimbangan hormon yang mempengaruhi keputihan.
+                </li>
+                <li>
+                    <strong>Penggunaan Pil KB:</strong> Beberapa jenis pil KB bisa mempengaruhi jumlah keputihan.
+                </li>
+            </ul>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Memahami perbedaan antara keputihan normal dan tidak normal adalah langkah awal yang sangat penting untuk menjaga kesehatanmu.
+            </p>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold">← Kembali ke Beranda</button>
+        </div>
+
+        <!-- Halaman Tanda Bahaya Keputihan -->
+        <div id="page-tanda-bahaya" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Tanda Bahaya Keputihan</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Keputihan yang tidak normal adalah tanda bahwa ada sesuatu yang tidak seimbang atau terinfeksi di area intimmu. Jangan diabaikan, ya! Segera periksa jika kamu menemukan salah satu tanda berikut:
+            </p>
+            <div class="space-y-4 text-gray-700">
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600">🔴 Keputihan berwarna hijau/kuning pekat</p>
+                    <p>Warna ini seringkali disebabkan oleh infeksi bakteri, seperti klamidia, atau penyakit menular seksual (PMS).</p>
+                </div>
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600">🔴 Berbau amis atau busuk</p>
+                    <p>Bau yang tidak sedap, terutama bau amis yang kuat, bisa menjadi indikasi infeksi seperti bakterial vaginosis atau trikomoniasis.</p>
+                </div>
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600">🔴 Disertai rasa gatal, perih, atau nyeri saat kencing</p>
+                    <p>Gejala ini adalah tanda umum infeksi jamur (candida) atau iritasi. Jika disertai rasa sakit saat buang air kecil, bisa juga karena infeksi saluran kemih (ISK).</p>
+                </div>
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600">🔴 Disertai perdarahan (di luar haid)</p>
+                    <p>Perdarahan di luar siklus menstruasi bisa menjadi tanda adanya infeksi serius, polip serviks, atau bahkan masalah pada leher rahim.</p>
+                </div>
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600">🔴 Jumlahnya sangat banyak dan terus menerus</p>
+                    <p>Meskipun tidak berbau atau berwarna, jumlah keputihan yang sangat banyak dan mengganggu aktivitas sehari-hari bisa menandakan ketidakseimbangan flora alami vagina.</p>
+                </div>
+            </div>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold">← Kembali ke Beranda</button>
+        </div>
+
+        <!-- Halaman Ciri-Ciri Normal vs Tidak Normal -->
+        <div id="page-ciri-ciri" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Ciri-Ciri Normal vs Tidak Normal</h2>
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-green-600 mb-2 flex items-center space-x-2">
+                    <span class="text-2xl">🌸</span><span>Keputihan Normal (Fisiologis)</span>
+                </h3>
+                <p class="text-gray-700 mb-4">
+                    Ini adalah keputihan yang menandakan organ intimmu sehat dan berfungsi dengan baik. Ciri-cirinya:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>
+                        <strong>Warna:</strong> Putih bening hingga agak putih susu.
+                    </li>
+                    <li>
+                        <strong>Bau:</strong> Tidak berbau atau berbau sangat samar.
+                    </li>
+                    <li>
+                        <strong>Rasa:</strong> Tidak menimbulkan rasa gatal, perih, atau iritasi.
+                    </li>
+                    <li>
+                        <strong>Waktu:</strong> Jumlahnya bisa meningkat menjelang atau sesudah haid, saat masa subur, atau ketika kamu merasa stres.
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-red-600 mb-2 flex items-center space-x-2">
+                    <span class="text-2xl">⚠</span><span>Keputihan Tidak Normal (Patologis)</span>
+                </h3>
+                <p class="text-gray-700 mb-4">
+                    Ini adalah keputihan yang perlu diwaspadai dan diperiksakan ke dokter. Ciri-cirinya:
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>
+                        <strong>Warna:</strong> Kuning, hijau, abu-abu, atau coklat.
+                    </li>
+                    <li>
+                        <strong>Bau:</strong> Berbau busuk, amis, atau tidak sedap.
+                    </li>
+                    <li>
+                        <strong>Tekstur:</strong> Lengket dan menggumpal seperti keju cottage.
+                    </li>
+                    <li>
+                        <strong>Rasa:</strong> Disertai rasa gatal, nyeri, atau perih.
+                    </li>
+                    <li>
+                        <strong>Gejala Lain:</strong> Bisa disertai demam atau nyeri perut bagian bawah, yang menandakan infeksi serius.
+                    </li>
+                </ul>
+            </div>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold">← Kembali ke Beranda</button>
+        </div>
+
+        <!-- Halaman Pencegahan & Perawatan -->
+        <div id="page-pencegahan" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Pencegahan & Perawatan</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Menjaga kebersihan area intim adalah kunci untuk mencegah keputihan tidak normal. Yuk, terapkan kebiasaan baik ini!
+            </p>
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-green-600 mb-2 flex items-center space-x-2">
+                    <span class="text-2xl">✅</span><span>Yang Boleh Dilakukan</span>
+                </h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>
+                        <strong>Rajin Ganti Celana Dalam:</strong> Ganti celana dalam setidaknya 2-3 kali sehari, terutama jika terasa lembap.
+                    </li>
+                    <li>
+                        <strong>Gunakan Celana Dalam Katun:</strong> Bahan katun menyerap keringat dan membuat area intim bisa "bernapas."
+                    </li>
+                    <li>
+                        <strong>Bersihkan dengan Benar:</strong> Selalu cuci area kewanitaan dari arah depan ke belakang dengan air bersih. Keringkan dengan handuk atau tisu bersih sebelum memakai celana.
+                    </li>
+                    <li>
+                        <strong>Konsumsi Makanan Sehat:</strong> Perbanyak makan buah, sayur, dan yogurt yang mengandung bakteri baik (probiotik) untuk menjaga keseimbangan flora tubuh.
+                    </li>
+                    <li>
+                        <strong>Segera Periksa:</strong> Jangan tunda untuk periksa ke dokter jika ada tanda mencurigakan.
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-red-600 mb-2 flex items-center space-x-2">
+                    <span class="text-2xl">❌</span><span>Yang Sebaiknya Tidak Dilakukan</span>
+                </h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>
+                        <strong>Jangan Sering Pakai Celana Ketat:</strong> Celana ketat membuat area intim lembap dan memicu pertumbuhan jamur.
+                    </li>
+                    <li>
+                        <strong>Jangan Pakai Pembersih Berlebihan:</strong> Pembersih khusus kewanitaan bisa membunuh bakteri baik yang berfungsi sebagai pelindung alami.
+                    </li>
+                    <li>
+                        <strong>Jangan Tunda Ganti Pembalut:</strong> Saat haid, segera ganti pembalut secara berkala agar bakteri tidak berkembang biak.
+                    </li>
+                    <li>
+                        <strong>Jangan Menggaruk:</strong> Menggaruk area intim yang gatal bisa menyebabkan iritasi dan luka, membuka jalan bagi infeksi.
+                    </li>
+                    <li>
+                        <strong>Jangan Percaya Ramuan Instan:</strong> Hindari penggunaan ramuan tanpa rekomendasi medis yang jelas, karena bisa berbahaya bagi organ intimmu.
+                    </li>
+                </ul>
+            </div>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold">← Kembali ke Beranda</button>
+        </div>
+
+        <!-- Halaman Fakta vs Mitos -->
+        <div id="page-mitos" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Fakta vs Mitos</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Banyak informasi simpang siur tentang keputihan. Yuk, luruskan bersama!
+            </p>
+            <div class="space-y-4">
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600 mb-1">Mitos: Keputihan itu selalu penyakit.</p>
+                    <p class="text-gray-700"><strong>Fakta:</strong> Tidak, keputihan bisa menjadi hal yang normal dan sehat. Keputihan yang normal adalah bagian dari cara tubuhmu menjaga diri. Keputihan yang perlu diwaspadai adalah yang menunjukkan tanda-tanda abnormal seperti warna, bau, dan gejala lain yang tidak biasa.</p>
+                </div>
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600 mb-1">Mitos: Minum soda atau makan pedas bisa bikin keputihan.</p>
+                    <p class="text-gray-700"><strong>Fakta:</strong> Tidak ada bukti ilmiah langsung yang menyatakan bahwa makanan atau minuman tertentu menjadi penyebab keputihan. Namun, pola hidup tidak sehat dan konsumsi gula berlebih bisa mempengaruhi keseimbangan tubuh secara keseluruhan, yang secara tidak langsung bisa memperburuk keputihan.</p>
+                </div>
+                <div class="pink-pastel p-4 rounded-xl">
+                    <p class="font-semibold text-red-600 mb-1">Mitos: Keputihan normal tidak perlu dijaga kebersihannya.</p>
+                    <p class="text-gray-700"><strong>Fakta:</strong> Tetap perlu! Menjaga kebersihan area kewanitaan adalah hal wajib, terlepas dari jenis keputihanmu. Area ini rentan lembap, dan jika tidak bersih, bisa menjadi tempat ideal bagi bakteri atau jamur untuk berkembang biak.</p>
+                </div>
+            </div>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold">← Kembali ke Beranda</button>
+        </div>
+
+        <!-- Halaman Quiz -->
+        <div id="page-quiz" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Quiz Interaktif 🎮</h2>
+            <div id="quiz-content" class="space-y-6">
+                <!-- Soal Quiz akan dimuat di sini -->
+            </div>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold">← Kembali ke Beranda</button>
+        </div>
+
+        <!-- Halaman Bantuan -->
+        <div id="page-bantuan" class="hidden page-transition">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Pusat Bantuan 📞</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Jika kamu memiliki pertanyaan atau butuh bantuan lebih lanjut, jangan ragu untuk berkonsultasi dengan profesional.
+            </p>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold">← Kembali ke Beranda</button>
+        </div>
+
+        <!-- Halaman Sertifikat -->
+        <div id="page-certificate" class="hidden page-transition text-center">
+            <h2 class="text-2xl font-bold text-green-600 mb-4">Selamat! 🎉</h2>
+            <p class="text-gray-700 mb-4">Kamu telah menyelesaikan Quiz dan mendapatkan sertifikat digital.</p>
+            <div id="certificate-box" class="p-6 rounded-lg bg-white-50 relative overflow-hidden" style="border: 2px solid #FBCFE8; box-shadow: 0 4px 14px rgba(0,0,0,0.1); background-color: #FDF2F8;">
+                <div class="absolute inset-0" style="background-image: url('https://placehold.co/800x600/FCE7F3/E53935?text=✨'); opacity: 0.1; background-size: cover;"></div>
+                <div class="relative z-10 p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Sertifikat Edukasi Kesehatan Reproduksi Remaja</h3>
+                    <p class="text-lg text-gray-600">Diberikan kepada:</p>
+                    <p id="certificate-name" class="text-3xl font-bold text-red-600 my-2" style="font-family: 'Brush Script MT', cursive; font-size: 2.5rem;"></p>
+                    <p class="text-sm text-gray-500 mt-4">Atas partisipasinya dalam edukasi "Keputihan: Kenali Tubuhmu, Sehatkan Dirimu".</p>
+                    <div class="mt-4 text-xs text-gray-400">WhityCare - ${new Date().getFullYear()}</div>
+                </div>
+            </div>
+            <button id="download-certificate-btn" class="mt-6 ruby-red text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-red-700 transition-colors">
+                Unduh Sertifikat
+            </button>
+            <button onclick="showPage('home')" class="mt-4 text-gray-600 hover:text-gray-900 transition-colors font-semibold block">← Kembali ke Beranda</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Data Soal Quiz
+        const quizQuestions = [
+            {
+                type: "benar-salah",
+                question: "Keputihan selalu berbahaya.",
+                answer: false,
+                explanation: "Keputihan bisa menjadi hal yang normal dan sehat."
+            },
+            {
+                type: "pilihan-ganda",
+                question: "Warna keputihan yang harus diwaspadai adalah?",
+                options: ["Putih bening", "Kuning pekat", "Tidak berbau"],
+                answer: "Kuning pekat",
+                explanation: "Keputihan berwarna kuning atau hijau pekat bisa menandakan adanya infeksi."
+            },
+            {
+                type: "benar-salah",
+                question: "Rajin ganti celana dalam bisa mencegah keputihan tidak normal.",
+                answer: true,
+                explanation: "Ini adalah salah satu cara terbaik untuk menjaga kebersihan dan mencegah infeksi."
+            },
+            {
+                type: "pilihan-ganda",
+                question: "Yang sebaiknya tidak dilakukan untuk menjaga kesehatan organ intim adalah?",
+                options: ["Menggunakan celana dalam katun", "Menggaruk area intim", "Mencuci dengan air bersih"],
+                answer: "Menggaruk area intim",
+                explanation: "Menggaruk dapat menyebabkan iritasi dan luka, yang bisa memperburuk kondisi."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+        let username = '';
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('#app-container > div');
+            pages.forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('page-transition');
+            });
+
+            const currentPage = document.getElementById(`page-${pageId}`);
+            if (currentPage) {
+                currentPage.classList.remove('hidden');
+                currentPage.classList.add('page-transition');
+    
+                if (pageId === 'quiz') {
+                    startQuiz();
+                } else if (pageId === 'certificate') {
+                    document.getElementById('certificate-name').textContent = username;
+                }
+            } else {
+                console.error(`Page with ID 'page-${pageId}' not found.`);
+            }
+        }
+        
+        function checkInputAndGoHome() {
+            const nameInput = document.getElementById('user-name').value.trim();
+            const ageInput = document.getElementById('user-age').value.trim();
+            const alertElement = document.getElementById('welcome-alert');
+            
+            if (nameInput === '' || ageInput === '' || isNaN(ageInput)) {
+                alertElement.classList.remove('hidden');
+            } else {
+                username = nameInput;
+                alertElement.classList.add('hidden');
+                showPage('home');
+            }
+        }
+
+        function startQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const quizContainer = document.getElementById('quiz-content');
+            quizContainer.innerHTML = '';
+            
+            if (currentQuizIndex >= quizQuestions.length) {
+                showQuizResult();
+                return;
+            }
+
+            const questionData = quizQuestions[currentQuizIndex];
+            const questionElement = document.createElement('div');
+            questionElement.className = 'quiz-question bg-gray-100 p-4 rounded-lg';
+            questionElement.innerHTML = `
+                <p class="text-lg font-semibold mb-4">${currentQuizIndex + 1}. ${questionData.question}</p>
+            `;
+
+            if (questionData.type === 'benar-salah') {
+                const btnTrue = document.createElement('button');
+                btnTrue.textContent = 'Benar';
+                btnTrue.className = 'w-1/2 ruby-red text-white py-2 rounded-lg mr-2 hover:bg-red-700 transition-colors font-semibold';
+                btnTrue.onclick = () => checkAnswer(true, questionData);
+                
+                const btnFalse = document.createElement('button');
+                btnFalse.textContent = 'Salah';
+                btnFalse.className = 'w-1/2 ruby-red text-white py-2 rounded-lg ml-2 hover:bg-red-700 transition-colors font-semibold';
+                btnFalse.onclick = () => checkAnswer(false, questionData);
+
+                questionElement.appendChild(btnTrue);
+                questionElement.appendChild(btnFalse);
+
+            } else if (questionData.type === 'pilihan-ganda') {
+                questionData.options.forEach(option => {
+                    const btn = document.createElement('button');
+                    btn.textContent = option;
+                    btn.className = 'w-full text-left py-2 px-4 ruby-red text-white rounded-lg mb-2 hover:bg-red-700 transition-colors font-semibold';
+                    btn.onclick = () => checkAnswer(option, questionData);
+                    questionElement.appendChild(btn);
+                });
+            }
+
+            quizContainer.appendChild(questionElement);
+        }
+
+        function checkAnswer(userAnswer, questionData) {
+            let isCorrect = false;
+            if (questionData.type === 'benar-salah') {
+                isCorrect = userAnswer === questionData.answer;
+            } else if (questionData.type === 'pilihan-ganda') {
+                isCorrect = userAnswer === questionData.answer;
+            }
+
+            const resultMessage = document.createElement('div');
+            resultMessage.className = `p-4 mt-4 rounded-lg text-center ${isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
+            resultMessage.innerHTML = `
+                <p class="font-bold">${isCorrect ? 'Jawabanmu Benar!' : 'Jawabanmu Salah.'}</p>
+                <p>${questionData.explanation}</p>
+            `;
+
+            document.getElementById('quiz-content').appendChild(resultMessage);
+            
+            if (isCorrect) {
+                score++;
+            }
+
+            setTimeout(() => {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            }, 2000); // Tunda 2 detik sebelum ke soal berikutnya
+        }
+
+        function showQuizResult() {
+            const percentage = (score / quizQuestions.length) * 100;
+            const quizContainer = document.getElementById('quiz-content');
+            quizContainer.innerHTML = `
+                <div class="text-center">
+                    <h3 class="text-xl font-bold mb-2">Quiz Selesai!</h3>
+                    <p class="text-2xl font-bold text-red-600">Skor: ${score} / ${quizQuestions.length}</p>
+                    <p class="text-xl font-bold mb-4">Persentase: ${percentage.toFixed(0)}%</p>
+                </div>
+            `;
+            if (percentage >= 70) {
+                showPage('certificate');
+            } else {
+                const message = document.createElement('p');
+                message.className = 'text-center text-red-600 mt-4';
+                message.textContent = 'Maaf, kamu belum lulus. Silakan coba lagi nanti!';
+                quizContainer.appendChild(message);
+            }
+        }
+        
+        // Fungsi untuk mengunduh sertifikat
+        document.getElementById('download-certificate-btn').onclick = function() {
+            // Membuat konten HTML untuk sertifikat
+            const certificateContent = `
+                <div style="width: 800px; height: 600px; padding: 50px; text-align: center; font-family: 'Inter', sans-serif; border: 10px solid #FEE2E2; background: linear-gradient(135deg, #FDF2F8 0%, #FEE2E2 100%); position: relative; overflow: hidden;">
+                    <!-- Border Dekoratif -->
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 5px solid #F0A5AB; box-sizing: border-box; transform: rotate(2deg); opacity: 0.5;"></div>
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 5px solid #E53935; box-sizing: border-box; transform: rotate(-2deg); opacity: 0.5;"></div>
+                    
+                    <div style="border: 2px dashed #E53935; padding: 30px; height: 100%; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1;">
+                        <h1 style="font-size: 36px; color: #E53935; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px;">Sertifikat Penghargaan</h1>
+                        <h2 style="font-size: 28px; color: #333; margin-bottom: 20px;">Atas Partisipasi dalam Program Edukasi</h2>
+                        <h3 style="font-size: 20px; color: #666; margin-bottom: 5px;">Dengan bangga diberikan kepada:</h3>
+                        <p style="font-size: 54px; font-weight: bold; color: #E53935; margin-bottom: 20px; font-family: 'Brush Script MT', cursive;">${username}</p>
+                        <p style="font-size: 18px; color: #666; margin-bottom: 40px;">Sebagai apresiasi atas komitmen dan ketertarikan dalam memahami kesehatan reproduksi remaja melalui program "GIRLS TALK - WHITY CARE".</p>
+
+                        <div style="display: flex; justify-content: space-around; width: 100%; margin-top: auto;">
+                            <div>
+                                <p style="font-size: 14px; color: #888;">Dikeluarkan pada:</p>
+                                <p style="font-size: 16px; font-weight: bold; color: #555;">${new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                            </div>
+                            <div>
+                                <p style="font-size: 14px; color: #888;">Oleh:</p>
+                                <p style="font-size: 16px; font-weight: bold; color: #555;">Tim WhityCare</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        
+            const blob = new Blob([certificateContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+        
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Sertifikat-WhityCare-${username.replace(/ /g, '-')}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+    </script>
+
+</body>
+</html>
